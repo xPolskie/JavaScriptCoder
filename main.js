@@ -4,6 +4,8 @@ let saldo = 100000;
 let montoInversion = 0;
 let intentosRestantes = 3
 
+// Proximamente > multi usuarios 
+
 // const usuarios = [
 //   {
 //     username: "juan",
@@ -33,6 +35,8 @@ function validarUsuario(inputUsername, inputPassword) {
   }
 }
 
+// Proximamente > multi usuarios 
+
 // function validarUsuario(inputUsername, inputPassword) {
 //   for (let i = 0; i < usuarios.length; i++) {
 //     if (inputUsername === usuarios[i].username && inputPassword === usuarios[i].password) {
@@ -51,7 +55,7 @@ while (!ingresoExitoso && intentosRestantes > 0) {
   if (validarUsuario(inputUsername, inputPassword)) {
     let opcion;
     do {
-      opcion = prompt(`Bienvenido! Tu saldo disponible es de $${saldo}. ¿Qué desea hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Desloguearse`);
+      opcion = prompt(`Bienvenido! Su saldo disponible es de $${saldo}. ¿Qué desea hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Desloguearse`);
       switch (opcion) {
 
         case "1":
