@@ -3,6 +3,28 @@ const password = "musk";
 let saldo = 10000;
 let montoInversion = 0;
 
+// const usuarios = [
+//   {
+//     username: "juan",
+//     password: "juan",
+//     saldo: 5000,
+//     montoInversion: 0
+//   },
+//   {
+//     username: "maria",
+//     password: "maria",
+//     saldo: 3000,
+//     montoInversion: 0
+//   },
+//   {
+//     username: "pedro",
+//     password: "pedro",
+//     saldo: 2000,
+//     montoInversion: 0
+//   }
+// ];
+
+
 function validarUsuario(inputUsername, inputPassword) {
   if (inputUsername === username && inputPassword === password) {
     return true;
@@ -10,6 +32,16 @@ function validarUsuario(inputUsername, inputPassword) {
     return false;
   }
 }
+
+
+// function validarUsuario(inputUsername, inputPassword) {
+//   for (let i = 0; i < usuarios.length; i++) {
+//     if (inputUsername === usuarios[i].username && inputPassword === usuarios[i].password) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
 alert("Bienvenido al sistema, por favor ingrese sus credenciales.");
 let ingresoExitoso = false;
