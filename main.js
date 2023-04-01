@@ -1,7 +1,8 @@
 const username = "elon";
 const password = "musk";
-let saldo = 10000;
+let saldo = 100000;
 let montoInversion = 0;
+let intentosRestantes = 3
 
 // const usuarios = [
 //   {
@@ -24,7 +25,6 @@ let montoInversion = 0;
 //   }
 // ];
 
-
 function validarUsuario(inputUsername, inputPassword) {
   if (inputUsername === username && inputPassword === password) {
     return true;
@@ -32,7 +32,6 @@ function validarUsuario(inputUsername, inputPassword) {
     return false;
   }
 }
-
 
 // function validarUsuario(inputUsername, inputPassword) {
 //   for (let i = 0; i < usuarios.length; i++) {
@@ -43,42 +42,42 @@ function validarUsuario(inputUsername, inputPassword) {
 //   return false;
 // }
 
-alert("Bienvenido al sistema, por favor ingrese sus credenciales.");
+alert("Bienvenido, por favor ingrese sus credenciales.");
 let ingresoExitoso = false;
-while (!ingresoExitoso) {
-  const inputUsername = prompt("Ingresa tu usuario:");
-  const inputPassword = prompt("Ingresa tu contraseña:");
+while (!ingresoExitoso && intentosRestantes > 0) {
+  const inputUsername = prompt("Ingrese su usuario:");
+  const inputPassword = prompt("Ingrese su contraseña:");
 
   if (validarUsuario(inputUsername, inputPassword)) {
     let opcion;
     do {
-      opcion = prompt(`Inicio de sesión exitoso! Tu saldo disponible es de $${saldo}. ¿Qué deseas hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Desloguearse`);
+      opcion = prompt(`Bienvenido! Tu saldo disponible es de $${saldo}. ¿Qué desea hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Desloguearse`);
       switch (opcion) {
 
         case "1":
-          const monto = parseInt(prompt("Ingresa el monto a retirar:"));
+          const monto = parseInt(prompt("Ingrese el monto a retirar:"));
           if (isNaN(monto)) {
             alert("El monto ingresado es inválido.");
           } else if (monto > saldo) {
             alert("El monto ingresado es mayor que el saldo disponible.");
           } else {
             saldo -= monto;
-            alert(`Retiro exitoso! Tu nuevo saldo disponible es de $${saldo}.`);
+            alert(`Retiro completado! Su nuevo saldo disponible es de $${saldo}.`);
           }
           break;
 
         case "2":
-          const montoIngreso = parseInt(prompt("Ingresa el monto a ingresar:"));
+          const montoIngreso = parseInt(prompt("Ingrese el monto a depositar:"));
           if (isNaN(montoIngreso)) {
             alert("El monto ingresado es inválido.");
           } else {
             saldo += montoIngreso;
-            alert(`Ingreso exitoso! Tu nuevo saldo disponible es de $${saldo}.`);
+            alert(`Deposito completado! Su nuevo saldo disponible es de $${saldo}.`);
           }
           break;
 
         case "3":
-          let montoInvertir = parseInt(prompt(`Ingresa el monto a invertir (saldo actual: $${saldo}):`));
+          let montoInvertir = parseInt(prompt(`Ingrese el monto a invertir (saldo actual: $${saldo}):`));
           if (isNaN(montoInvertir)) {
             alert("El monto ingresado es inválido.");
           } else if (montoInvertir > saldo) {
@@ -88,7 +87,7 @@ while (!ingresoExitoso) {
             const tasaInteresMensual = tasaInteresAnual / 12;
             const interesGenerado = montoInvertir * tasaInteresMensual;
             const montoTotal = montoInvertir + interesGenerado;
-            const confirmacionInversion = confirm(`Usted desea invertir $${montoInvertir} a un plazo fijo de 30 días con una tasa de interés anual del 75%. El interés generado en 30 días será de $${interesGenerado.toFixed(2)}. El monto total al final del plazo será de $${montoTotal.toFixed(2)}. ¿Desea confirmar la inversión?`);
+            const confirmacionInversion = confirm(`Usted desea invertir $${montoInvertir} a un plazo fijo de 30 días con una tasa de interés anual del 75%? El interés generado en 30 días será de $${interesGenerado.toFixed(2)}. El monto total al final del plazo será de $${montoTotal.toFixed(2)}. ¿Desea confirmar la inversión?`);
             if (confirmacionInversion) {
               saldo -= montoInvertir;
               alert(`Inversión realizada con éxito. Su nuevo saldo disponible es de $${saldo}.`);
@@ -101,27 +100,28 @@ while (!ingresoExitoso) {
 
         case "4":
           if (montoInversion === 0) {
-            alert("No tienes una inversión activa.");
+            alert("Usted no tiene una inversión activa.");
           } else {
             const tasaInteresAnual = 0.75;
             const tasaInteresMensual = tasaInteresAnual / 12;
             const interesGenerado = montoInversion * tasaInteresMensual;
             const montoTotal = montoInversion + interesGenerado;
-            alert(`Tu inversión activa es de $${montoInversion}, vence en 30 días y te dara un monto total de $${montoTotal.toFixed(2)}.`);
+            alert(`Su inversión activa es de $${montoInversion}, vence en 30 días y te dara un monto total de $${montoTotal.toFixed(2)}.`);
           }
           break;
 
         case "5":
-          alert("Gracias por usar nuestros servicios.");
+          alert("Ha cerrado su sesión, gracias por utilizar nuestros servicios.");
           ingresoExitoso = true;
           break;
         default:
-          alert("Opción inválida. Por favor, elige una opción válida.");
+          alert("Opción inválida. Por favor, elija una opción válida.");
           break;
       }
     } while (opcion !== "5" && !ingresoExitoso);
   } else {
-    alert("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
+    alert(`Usuario o contraseña incorrectos. Intentos restantes: ${intentosRestantes - 1}.`);
+    intentosRestantes--;
   }
 }
 
