@@ -15,9 +15,7 @@ const criptomonedas = [
   { nombre: "DOGE", precio: 5, comprado: false },
 ];
 
-
-
-// funcion para inicio de sesion y validacion de los datos
+// funcion para inicio de sesion y validacion de los datos ingresados
 
 function validarUsuario(inputUsername, inputPassword) {
   if (inputUsername === username && inputPassword === password) {
@@ -29,11 +27,11 @@ function validarUsuario(inputUsername, inputPassword) {
 
 alert("Bienvenido, por favor ingrese sus credenciales.");
 let ingresoExitoso = false;
-while (!ingresoExitoso && intentosRestantes > 0) {
+while (!ingresoExitoso && intentosRestantes > 0) { // Comprueba si los ingresos erroneos son mayor a 0
   const inputUsername = prompt("Ingrese su usuario:");
   const inputPassword = prompt("Ingrese su contraseña:");
 
-  // menu de opciones a elegir
+  // Menu de opciones a elegir
 
   if (validarUsuario(inputUsername, inputPassword)) {
     let opcion;
@@ -98,7 +96,7 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           break;
 
         case "5":
-          let criptoIndex;
+          let criptoIndex; // llama al array de criptos segun su posicion para mostrar el valor
           switch (prompt(`Elija una criptomoneda para comprar:\n\n1. Bitcoin - Precio actual: $${criptomonedas[0].precio}\n2. Ethereum - Precio actual: $${criptomonedas[1].precio}\n3. BNB - Precio actual: $${criptomonedas[2].precio}\n4. DOGE - Precio actual: $${criptomonedas[3].precio}`)) {
             case "1":
               criptoIndex = 1;
@@ -133,8 +131,6 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           }
           break;
 
-
-
         case "6":
           if (criptomonedas.every(cripto => !cripto.comprado)) {
             alert("Usted no posee criptomonedas adquiridas.");
@@ -149,7 +145,6 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           }
           break;
 
-
         case "7":
           alert("Ha cerrado su sesión, gracias por utilizar nuestros servicios.");
           ingresoExitoso = true;
@@ -158,9 +153,8 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           alert("Opción inválida. Por favor, elija una opción válida.");
           break;
 
-
       }
-    } while (opcion !== "7" && !ingresoExitoso);
+    } while (opcion !== "7" && !ingresoExitoso); //Bucle
   } else {
     alert(`Usuario o contraseña incorrectos. Intentos restantes: ${intentosRestantes - 1}.`); //resta intentos de ingreso
     intentosRestantes--;
