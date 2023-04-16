@@ -1,31 +1,23 @@
+// usuario, contraseña y saldo declarados
+
 const username = "elon";
 const password = "musk";
 let saldo = 100000;
 let montoInversion = 0;
 let intentosRestantes = 3
 
-// Proximamente > multi usuarios 
+// array de cryptos con nombre, precio y estado de compra false para verificar luego
 
-// const usuarios = [
-//   {
-//     username: "juan",
-//     password: "juan",
-//     saldo: 5000,
-//     montoInversion: 0
-//   },
-//   {
-//     username: "maria",
-//     password: "maria",
-//     saldo: 3000,
-//     montoInversion: 0
-//   },
-//   {
-//     username: "pedro",
-//     password: "pedro",
-//     saldo: 2000,
-//     montoInversion: 0
-//   }
-// ];
+const criptomonedas = [
+  { nombre: "Bitcoin", precio: 60000, comprado: false },
+  { nombre: "Ethereum", precio: 2500, comprado: false },
+  { nombre: "BNB", precio: 450, comprado: false },
+  { nombre: "DOGE", precio: 5, comprado: false },
+];
+
+
+
+// funcion para inicio de sesion y validacion de los datos
 
 function validarUsuario(inputUsername, inputPassword) {
   if (inputUsername === username && inputPassword === password) {
@@ -35,34 +27,25 @@ function validarUsuario(inputUsername, inputPassword) {
   }
 }
 
-// Proximamente > multi usuarios 
-
-// function validarUsuario(inputUsername, inputPassword) {
-//   for (let i = 0; i < usuarios.length; i++) {
-//     if (inputUsername === usuarios[i].username && inputPassword === usuarios[i].password) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
-
 alert("Bienvenido, por favor ingrese sus credenciales.");
 let ingresoExitoso = false;
 while (!ingresoExitoso && intentosRestantes > 0) {
   const inputUsername = prompt("Ingrese su usuario:");
   const inputPassword = prompt("Ingrese su contraseña:");
 
+  // menu de opciones a elegir
+
   if (validarUsuario(inputUsername, inputPassword)) {
     let opcion;
     do {
-      opcion = prompt(`Bienvenido! Su saldo disponible es de $${saldo}. ¿Qué desea hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Desloguearse`);
+      opcion = prompt(`Bienvenido! Su saldo disponible es de $${saldo}. ¿Qué desea hacer?\n\n1. Retirar saldo\n2. Ingresar dinero a la cuenta\n3. Invertir en plazo fijo\n4. Ver inversion activa\n5. Comprar Crypto\n6. Ver cryptos activas\n7. Desloguearse`);
       switch (opcion) {
 
         case "1":
           const monto = parseInt(prompt("Ingrese el monto a retirar:"));
           if (isNaN(monto)) {
             alert("El monto ingresado es inválido.");
-          } else if (monto > saldo) {
+          } else if (monto > saldo) { // Realiza la compra, siempre y cuando haya saldo suficiente
             alert("El monto ingresado es mayor que el saldo disponible.");
           } else {
             saldo -= monto;
@@ -84,7 +67,7 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           let montoInvertir = parseInt(prompt(`Ingrese el monto a invertir (saldo actual: $${saldo}):`));
           if (isNaN(montoInvertir)) {
             alert("El monto ingresado es inválido.");
-          } else if (montoInvertir > saldo) {
+          } else if (montoInvertir > saldo) { // Realiza la compra, siempre y cuando haya saldo suficiente
             alert("El monto ingresado es mayor que el saldo disponible.");
           } else {
             const tasaInteresAnual = 0.75;
@@ -115,16 +98,71 @@ while (!ingresoExitoso && intentosRestantes > 0) {
           break;
 
         case "5":
+          let criptoIndex;
+          switch (prompt(`Elija una criptomoneda para comprar:\n\n1. Bitcoin - Precio actual: $${criptomonedas[0].precio}\n2. Ethereum - Precio actual: $${criptomonedas[1].precio}\n3. BNB - Precio actual: $${criptomonedas[2].precio}\n4. DOGE - Precio actual: $${criptomonedas[3].precio}`)) {
+            case "1":
+              criptoIndex = 1;
+              break;
+            case "2":
+              criptoIndex = 2;
+              break;
+            case "3":
+              criptoIndex = 3;
+              break;
+            case "4":
+              criptoIndex = 4;
+              break;
+            default:
+              alert("La opción ingresada es inválida.");
+
+          }
+          const criptoCantidad = parseInt(prompt(`Ingrese la cantidad a comprar de ${criptomonedas[criptoIndex - 1].nombre}:`));
+          if (Number.isNaN(criptoCantidad)) {
+            alert("La cantidad ingresada es inválida.");
+
+          }
+          const criptoSeleccionada = criptomonedas[criptoIndex - 1];
+          const costoTotal = criptoCantidad * criptoSeleccionada.precio;
+          if (costoTotal > saldo) { // Realiza la compra, siempre y cuando haya saldo suficiente
+            alert("No tiene suficiente saldo para comprar esta cantidad de criptomonedas.");
+          } else {
+            saldo -= costoTotal;
+            criptoSeleccionada.comprado = true;
+            criptoSeleccionada.cantidadComprada = criptoCantidad;
+            alert(`Compra realizada con éxito. Su nuevo saldo disponible es de $${saldo}.`);
+          }
+          break;
+
+
+
+        case "6":
+          if (criptomonedas.every(cripto => !cripto.comprado)) {
+            alert("Usted no posee criptomonedas adquiridas.");
+          } else {
+            let criptosCompradas = "";
+            criptomonedas.forEach((cripto, index) => {
+              if (cripto.comprado) {
+                criptosCompradas += `${cripto.nombre} - Cantidad: ${cripto.cantidadComprada}\n`;
+              }
+            });
+            alert(`Criptomonedas en tenencia: ${criptosCompradas}`);
+          }
+          break;
+
+
+        case "7":
           alert("Ha cerrado su sesión, gracias por utilizar nuestros servicios.");
           ingresoExitoso = true;
           break;
         default:
           alert("Opción inválida. Por favor, elija una opción válida.");
           break;
+
+
       }
-    } while (opcion !== "5" && !ingresoExitoso);
+    } while (opcion !== "7" && !ingresoExitoso);
   } else {
-    alert(`Usuario o contraseña incorrectos. Intentos restantes: ${intentosRestantes - 1}.`);
+    alert(`Usuario o contraseña incorrectos. Intentos restantes: ${intentosRestantes - 1}.`); //resta intentos de ingreso
     intentosRestantes--;
   }
 }
