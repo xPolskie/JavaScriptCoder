@@ -1,3 +1,5 @@
+const { default: Swal } = require("sweetalert2");
+
 // Variables globales
 const username = "elon";
 const password = "musk";
