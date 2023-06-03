@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+#login-form {
+    margin-top: 100px;
+}
+
+#login-form label, #login-form input {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#main {
+    margin-top: 50px;
+}
+
+#main h2 {
+    color: #333;
+}
+
+#main button {
+    display: block;
+    margin: 10px auto;
+}
